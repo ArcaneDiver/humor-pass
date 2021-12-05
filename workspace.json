@@ -2,6 +2,9 @@
   "version": 2,
   "projects": {
     "app": "apps/app",
-    "app-e2e": "apps/app-e2e"
+    "app-e2e": "apps/app-e2e",
+    "contracts": "libs/contracts",
+    "dashboard": "apps/dashboard",
+    "dashboard-e2e": "apps/dashboard-e2e"
   }
 }
