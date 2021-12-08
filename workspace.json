@@ -5,6 +5,8 @@
     "app-e2e": "apps/app-e2e",
     "contracts": "libs/contracts",
     "dashboard": "apps/dashboard",
-    "dashboard-e2e": "apps/dashboard-e2e"
+    "dashboard-e2e": "apps/dashboard-e2e",
+    "shared-components": "libs/shared/components",
+    "shared-store": "libs/shared/store"
   }
 }

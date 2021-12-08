@@ -15,7 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@humor-pass/contracts": ["libs/contracts/src/index.ts"]
+      "@humor-pass/contracts": ["libs/contracts/src/index.ts"],
+      "@humor-pass/shared/components": ["libs/shared/components/src/index.ts"],
+      "@humor-pass/shared/store": ["libs/shared/store/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
