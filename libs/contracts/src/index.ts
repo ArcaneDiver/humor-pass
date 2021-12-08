@@ -1,1 +1,3 @@
-export * from './lib/contracts';
+export { default as Counter } from '../artifacts/contracts/Counter.sol/Counter.json';
+
+export * from './addresses';

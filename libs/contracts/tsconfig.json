@@ -1,19 +1,11 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "files": [],
-  "include": [],
-  "references": [
-    {
-      "path": "./tsconfig.lib.json"
-    },
-    {
-      "path": "./tsconfig.spec.json"
-    }
-  ],
   "compilerOptions": {
-    "forceConsistentCasingInFileNames": true,
+    "target": "es2018",
+    "module": "commonjs",
     "strict": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
-  }
+    "esModuleInterop": true,
+    "outDir": "dist"
+  },
+  "include": ["./scripts", "./test", "./typechain-types", "./environment.d.ts"],
+  "files": ["./hardhat.config.ts"]
 }

@@ -10,12 +10,47 @@
         "lintFilePatterns": ["libs/contracts/**/*.ts"]
       }
     },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/contracts"],
+    "lint-sol": {
+      "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "jestConfig": "libs/contracts/jest.config.js",
-        "passWithNoTests": true
+        "command": "npx hardhat check",
+        "cwd": "libs/contracts"
+      }
+    },
+
+    "test": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "npx hardhat test",
+        "cwd": "libs/contracts"
+      }
+    },
+    "node": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "npx hardhat node",
+        "cwd": "libs/contracts"
+      }
+    },
+    "clean": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "npx hardhat clean",
+        "cwd": "libs/contracts"
+      }
+    },
+    "compile": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "npx hardhat compile",
+        "cwd": "libs/contracts"
+      }
+    },
+    "deploy": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "npx hardhat run scripts/deploy.ts",
+        "cwd": "libs/contracts"
       }
     }
   },
