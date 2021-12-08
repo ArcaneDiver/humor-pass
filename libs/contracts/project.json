@@ -5,9 +5,13 @@
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["libs/contracts/**/*.ts"]
+        "lintFilePatterns": [
+          "libs/contracts/**/*.ts"
+        ]
       }
     },
     "lint-sol": {
@@ -17,7 +21,6 @@
         "cwd": "libs/contracts"
       }
     },
-
     "test": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
