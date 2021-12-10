@@ -14,22 +14,16 @@ jobs:
   deps:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - name: Restore yarn cache folder
-        uses: actions/cache@v2
-        id: yarn-cache
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.5.0
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          node-version: 16
+          cache: yarn
 
       - name: Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn
 
   agents:
@@ -46,18 +40,11 @@ jobs:
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.5.0
-
-      - name: Restore yarn cache folder
-        uses: actions/cache@v2
-        id: yarn-cache
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          node-version: 16
+          cache: yarn
 
       - name: Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn
 
       - name: Start Nx Agent ${{ matrix.agent }}
@@ -75,18 +62,11 @@ jobs:
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.5.0
-
-      - name: Restore yarn cache folder
-        uses: actions/cache@v2
-        id: yarn-cache
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          node-version: 16
+          cache: yarn
 
       - name: Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn
 
       - name: Start agents
@@ -100,8 +80,13 @@ jobs:
 
   if-fails:
     needs: [deps, build]
-    if: always() && (needs.build.result == 'failure' || needs.job2.result == 'failure')
+    if: always() && (needs.build.result == 'failure')
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.5.0
+        with:
+          node-version: 16
+          cache: yarn
       - name: Stop all agents
         run: yarn nx-cloud stop-all-agents
