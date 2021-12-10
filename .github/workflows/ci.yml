@@ -48,6 +48,7 @@ jobs:
         run: yarn
 
   build:
+    needs: deps
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
