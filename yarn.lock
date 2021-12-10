@@ -20249,7 +20249,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nan@npm:^2.0.8, nan@npm:^2.3.3":
+"nan@npm:^2.14.0, nan@npm:^2.3.3":
   version: 2.15.0
   resolution: "nan@npm:2.15.0"
   dependencies:
@@ -24521,13 +24521,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scrypt@npm:^6.0.2":
+"scrypt@git+https://github.com/barrysteyn/node-scrypt.git#master":
   version: 6.0.3
-  resolution: "scrypt@npm:6.0.3"
+  resolution: "scrypt@https://github.com/barrysteyn/node-scrypt.git#commit=fb60a8d3c158fe115a624b5ffa7480f3a24b03fb"
   dependencies:
-    nan: ^2.0.8
-    node-gyp: latest
-  checksum: 8af3068fc90a2e8da9f90f23ef54cd14efe854b77b33eb8de99b89c03ed380df60532db08b73603ded0489c3412b89adb908a31bfaae26235ef28f5b5773eb0c
+    nan: ^2.14.0
+  checksum: 7726e1c0846e36c5b56eb059589b0cb469d18dfda09da76fd62d0041f9a8615c1608a792f89f3b18226759fb9dd261968782518dc483a3a6b9a708cd75446b79
   languageName: node
   linkType: hard
 
