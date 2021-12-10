@@ -11,21 +11,6 @@ env:
   NX_CLOUD_DISTRIBUTED_EXECUTION: true
 
 jobs:
-  agents:
-    runs-on: ubuntu-latest
-    name: Agents
-    timeout-minutes: 60
-    strategy:
-      matrix:
-        agent: [1, 2, 3]
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '14'
-      - run: npm install
-      - name: Start Nx Agent ${{ matrix.agent }}
-        run: npx nx-cloud start-agent
   deps:
     runs-on: ubuntu-latest
     steps:
@@ -46,6 +31,34 @@ jobs:
       - name: Install dependencies
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn
+
+  agents:
+    needs: deps
+    runs-on: ubuntu-latest
+    name: Agents
+    timeout-minutes: 60
+    strategy:
+      matrix:
+        agent: [1, 2, 3]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Restore yarn cache folder
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn
+
+      - name: Start Nx Agent ${{ matrix.agent }}
+        run: npx nx-cloud start-agent
 
   build:
     needs: deps
@@ -76,5 +89,13 @@ jobs:
       - name: Build projects
         run: yarn nx affected --target build --parallel --max-parallels=3
 
+      - name: Stop all agents
+        run: yarn nx-cloud stop-all-agents
+
+  if-fails:
+    needs: [deps, build]
+    if: always() && (needs.build.result == 'failure' || needs.job2.result == 'failure')
+    runs-on: ubuntu-latest
+    steps:
       - name: Stop all agents
         run: yarn nx-cloud stop-all-agents
