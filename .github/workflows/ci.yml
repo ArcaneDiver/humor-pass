@@ -24,9 +24,7 @@ jobs:
           cache: yarn
 
       - name: Install dependencies
-        run: |
-          yarn
-          yarn
+        run: yarn
 
   agents:
     needs: deps
