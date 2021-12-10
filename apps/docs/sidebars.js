@@ -1,6 +1,21 @@
 module.exports = {
-  someSidebar: {
-    Docusaurus: ['doc1', 'doc2', 'doc3'],
-    Features: ['mdx'],
-  },
+  someSidebar: [
+    {
+      type: 'category',
+      label: 'Docusaurus',
+      collapsible: true,
+      collapsed: true,
+      items: ['md-reference', 'mdx'],
+    },
+    {
+      type: 'category',
+      label: 'Architecture',
+      collapsible: true,
+      collapsed: true,
+      link: {
+        type: 'generated-index',
+      },
+      items: ['architecture/app', 'architecture/dashboard', 'architecture/cms'],
+    },
+  ],
 };
