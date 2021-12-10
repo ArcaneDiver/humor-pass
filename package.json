@@ -10,8 +10,8 @@
   "private": true,
   "dependencies": {
     "@chakra-ui/react": "^1.7.2",
-    "@docusaurus/core": "^2.0.0-alpha.70",
-    "@docusaurus/preset-classic": "^2.0.0-alpha.70",
+    "@docusaurus/core": "2.0.0-beta.10",
+    "@docusaurus/preset-classic": "2.0.0-beta.10",
     "@drizzle/react-plugin": "^1.5.3",
     "@drizzle/store": "^1.5.3",
     "@emotion/react": "11.5.0",
@@ -52,6 +52,7 @@
     "@nrwl/tao": "13.2.3",
     "@nrwl/web": "13.2.3",
     "@nrwl/workspace": "13.2.3",
+    "@nx-extend/strapi": "^2.0.1",
     "@nx-plus/docusaurus": "^12.2.0",
     "@testing-library/react": "12.1.2",
     "@testing-library/react-hooks": "7.0.2",
