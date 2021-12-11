@@ -105,49 +105,31 @@ jobs:
           IPFS_DEPLOY_PINATA__API_KEY: ${{ secrets.IPFS_DEPLOY_PINATA__API_KEY }}
           IPFS_DEPLOY_PINATA__SECRET_API_KEY: ${{ secrets.IPFS_DEPLOY_PINATA__SECRET_API_KEY }}
 
-  deploy-app:
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+  # deploy-app:
+  #   needs: [build]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
 
-      - name: Download dist folder
-        uses: actions/download-artifact@master
-        with:
-          name: dist
-          path: dist
+  #     - name: Download dist folder
+  #       uses: actions/download-artifact@master
+  #       with:
+  #         name: dist
+  #         path: dist
 
-      - name: Deploy to pinata
-        run: yarn dlx ipfs-deploy dist/apps/app -p pinata -d cloudflare
-        env:
-          IPFS_DEPLOY_CLOUDFLARE__API_TOKEN: ${{ secrets.IPFS_DEPLOY_CLOUDFLARE__API_TOKEN }}
-          IPFS_DEPLOY_CLOUDFLARE__ZONE: ${{ secrets.IPFS_DEPLOY_CLOUDFLARE__ZONE }}
-          IPFS_DEPLOY_CLOUDFLARE__RECORD: '_dnslink.humor-pass.mdellamea.it'
-          IPFS_DEPLOY_PINATA__API_KEY: ${{ secrets.IPFS_DEPLOY_PINATA__API_KEY }}
-          IPFS_DEPLOY_PINATA__SECRET_API_KEY: ${{ secrets.IPFS_DEPLOY_PINATA__SECRET_API_KEY }}
+  # deploy-dashboard:
+  #   needs: [build]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
 
-  deploy-dashboard:
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Download dist folder
-        uses: actions/download-artifact@master
-        with:
-          name: dist
-          path: dist
-
-      - name: Deploy to pinata
-        run: yarn dlx ipfs-deploy dist/apps/dashboard -p pinata -d cloudflare
-        env:
-          IPFS_DEPLOY_CLOUDFLARE__API_TOKEN: ${{ secrets.IPFS_DEPLOY_CLOUDFLARE__API_TOKEN }}
-          IPFS_DEPLOY_CLOUDFLARE__ZONE: ${{ secrets.IPFS_DEPLOY_CLOUDFLARE__ZONE }}
-          IPFS_DEPLOY_CLOUDFLARE__RECORD: '_dnslink.admin.humor-pass.mdellamea.it'
-          IPFS_DEPLOY_PINATA__API_KEY: ${{ secrets.IPFS_DEPLOY_PINATA__API_KEY }}
-          IPFS_DEPLOY_PINATA__SECRET_API_KEY: ${{ secrets.IPFS_DEPLOY_PINATA__SECRET_API_KEY }}
+  #     - name: Download dist folder
+  #       uses: actions/download-artifact@master
+  #       with:
+  #         name: dist
+  #         path: dist
 
   if-fails:
     needs: [build]
