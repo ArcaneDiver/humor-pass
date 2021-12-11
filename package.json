@@ -7,7 +7,7 @@
     "build": "nx build",
     "test": "nx test",
     "postinstall": "husky install",
-    "commit": "cz"
+    "commit": "./node_modules/.bin/cz"
   },
   "private": true,
   "dependencies": {
