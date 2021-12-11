@@ -15,8 +15,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@humor-pass/components/app": ["libs/components/app/src/index.ts"],
+      "@humor-pass/components/common": ["libs/components/common/src/index.ts"],
+      "@humor-pass/components/dashboard": [
+        "libs/components/dashboard/src/index.ts"
+      ],
       "@humor-pass/contracts": ["libs/contracts/src/index.ts"],
-      "@humor-pass/shared/components": ["libs/shared/components/src/index.ts"],
       "@humor-pass/shared/store": ["libs/shared/store/src/index.ts"]
     }
   },

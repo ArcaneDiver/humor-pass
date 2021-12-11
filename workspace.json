@@ -3,11 +3,80 @@
   "projects": {
     "app": "apps/app",
     "app-e2e": "apps/app-e2e",
+    "components-app": {
+      "root": "libs/components/app",
+      "sourceRoot": "libs/components/app/src",
+      "projectType": "library",
+      "tags": [],
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/components/app/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/components/app"],
+          "options": {
+            "jestConfig": "libs/components/app/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "components-common": {
+      "root": "libs/components/common",
+      "sourceRoot": "libs/components/common/src",
+      "projectType": "library",
+      "tags": [],
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/components/common/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/components/common"],
+          "options": {
+            "jestConfig": "libs/components/common/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "components-dashboard": {
+      "root": "libs/components/dashboard",
+      "sourceRoot": "libs/components/dashboard/src",
+      "projectType": "library",
+      "tags": [],
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": [
+              "libs/components/dashboard/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/components/dashboard"],
+          "options": {
+            "jestConfig": "libs/components/dashboard/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "contracts": "libs/contracts",
     "dashboard": "apps/dashboard",
     "dashboard-e2e": "apps/dashboard-e2e",
-    "shared-components": "libs/shared/components",
-    "shared-store": "libs/shared/store",
     "docs": {
       "projectType": "application",
       "root": "apps/docs",
@@ -27,6 +96,7 @@
         }
       },
       "tags": []
-    }
+    },
+    "shared-store": "libs/shared/store"
   }
 }
