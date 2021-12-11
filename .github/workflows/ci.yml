@@ -97,7 +97,7 @@ jobs:
           path: dist
 
       - name: Deploy to pinata
-        run: yarn dlx ipfs-deploy dist/apps/docs -p pinata -d cloudflare
+        run: yarn dlx ipfs-deploy dist/apps/docs -p pinata -d cloudflare -C
         env:
           IPFS_DEPLOY_CLOUDFLARE__API_TOKEN: ${{ secrets.IPFS_DEPLOY_CLOUDFLARE__API_TOKEN }}
           IPFS_DEPLOY_CLOUDFLARE__ZONE: ${{ secrets.IPFS_DEPLOY_CLOUDFLARE__ZONE }}
