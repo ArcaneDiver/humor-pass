@@ -26,6 +26,30 @@ jobs:
       - name: Install dependencies
         run: yarn
 
+  agents:
+    needs: deps
+    runs-on: ubuntu-latest
+    name: Agents
+    timeout-minutes: 60
+    strategy:
+      matrix:
+        agent: [1, 2, 3]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.5.0
+        with:
+          node-version: 14
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Start Nx Agent ${{ matrix.agent }}
+        run: npx nx-cloud start-agent
+
   build:
     needs: deps
     runs-on: ubuntu-latest
@@ -49,6 +73,9 @@ jobs:
 
       - name: Build projects
         run: yarn nx run-many --target=build --all=true --parallel=true
+
+      - name: Stop agents
+        run: yarn nx-cloud stop-all-agents
 
       - name: Upload dist artifacts
         uses: actions/upload-artifact@master
@@ -77,3 +104,64 @@ jobs:
           IPFS_DEPLOY_CLOUDFLARE__RECORD: '_dnslink.docs.humor-pass.mdellamea.it'
           IPFS_DEPLOY_PINATA__API_KEY: ${{ secrets.IPFS_DEPLOY_PINATA__API_KEY }}
           IPFS_DEPLOY_PINATA__SECRET_API_KEY: ${{ secrets.IPFS_DEPLOY_PINATA__SECRET_API_KEY }}
+
+  deploy-app:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Download dist folder
+        uses: actions/download-artifact@master
+        with:
+          name: dist
+          path: dist
+
+      - name: Deploy to pinata
+        run: yarn dlx ipfs-deploy dist/apps/app -p pinata -d cloudflare
+        env:
+          IPFS_DEPLOY_CLOUDFLARE__API_TOKEN: ${{ secrets.IPFS_DEPLOY_CLOUDFLARE__API_TOKEN }}
+          IPFS_DEPLOY_CLOUDFLARE__ZONE: ${{ secrets.IPFS_DEPLOY_CLOUDFLARE__ZONE }}
+          IPFS_DEPLOY_CLOUDFLARE__RECORD: '_dnslink.humor-pass.mdellamea.it'
+          IPFS_DEPLOY_PINATA__API_KEY: ${{ secrets.IPFS_DEPLOY_PINATA__API_KEY }}
+          IPFS_DEPLOY_PINATA__SECRET_API_KEY: ${{ secrets.IPFS_DEPLOY_PINATA__SECRET_API_KEY }}
+
+  deploy-dashboard:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Download dist folder
+        uses: actions/download-artifact@master
+        with:
+          name: dist
+          path: dist
+
+      - name: Deploy to pinata
+        run: yarn dlx ipfs-deploy dist/apps/dashboard -p pinata -d cloudflare
+        env:
+          IPFS_DEPLOY_CLOUDFLARE__API_TOKEN: ${{ secrets.IPFS_DEPLOY_CLOUDFLARE__API_TOKEN }}
+          IPFS_DEPLOY_CLOUDFLARE__ZONE: ${{ secrets.IPFS_DEPLOY_CLOUDFLARE__ZONE }}
+          IPFS_DEPLOY_CLOUDFLARE__RECORD: '_dnslink.admin.humor-pass.mdellamea.it'
+          IPFS_DEPLOY_PINATA__API_KEY: ${{ secrets.IPFS_DEPLOY_PINATA__API_KEY }}
+          IPFS_DEPLOY_PINATA__SECRET_API_KEY: ${{ secrets.IPFS_DEPLOY_PINATA__SECRET_API_KEY }}
+
+  if-fails:
+    needs: [build]
+    if: always() && (needs.build.result == 'failure')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.5.0
+        with:
+          node-version: 14
+          cache: yarn
+
+      - name: Stop all agents
+        run: yarn nx-cloud stop-all-agents
