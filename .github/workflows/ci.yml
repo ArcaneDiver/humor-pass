@@ -26,6 +26,12 @@ jobs:
       - name: Install dependencies
         run: yarn
 
+      - name: Upload Node Modules as artifacts
+        uses: actions/upload-artifact@master
+        with:
+          name: node-modules
+          path: node_modules
+
   agents:
     needs: deps
     runs-on: ubuntu-latest
@@ -44,8 +50,11 @@ jobs:
           node-version: 14
           cache: yarn
 
-      - name: Install dependencies
-        run: yarn
+      - name: Download node_modules
+        uses: actions/download-artifact@master
+        with:
+          name: node-modules
+          path: node_modules
 
       - name: Start Nx Agent ${{ matrix.agent }}
         run: npx nx-cloud start-agent
@@ -68,8 +77,11 @@ jobs:
           node-version: 14
           cache: yarn
 
-      - name: Install dependencies
-        run: yarn
+      - name: Download node_modules
+        uses: actions/download-artifact@master
+        with:
+          name: node-modules
+          path: node_modules
 
       - name: Start agents
         run: yarn nx-cloud start-ci-run
