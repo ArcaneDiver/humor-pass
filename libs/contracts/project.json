@@ -5,13 +5,9 @@
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/contracts/**/*.ts"
-        ]
+        "lintFilePatterns": ["libs/contracts/**/*.ts"]
       }
     },
     "lint-sol": {
@@ -52,7 +48,7 @@
     "deploy": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "command": "npx hardhat run scripts/deploy.ts",
+        "command": "npx hardhat --network fuji run scripts/deploy.ts",
         "cwd": "libs/contracts"
       }
     }

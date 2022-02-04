@@ -1,24 +1,13 @@
 import { ethers } from 'hardhat';
-import fs from 'fs';
-import path from 'path';
 
 const main = async () => {
-  const Counter = await ethers.getContractFactory('Counter');
-  const counter = await Counter.deploy();
-  await counter.deployed();
-  console.log(`Counter contract deployed at: ${counter.address}`);
+  const HumorPass = await ethers.getContractFactory('HumorPass');
+  const humorPass = await (await HumorPass.deploy()).deployed();
 
-  const config = `
-    // eslint-disable-next-line @typescript-eslint/no-inferrable-types
-    export const counterContractAddress: string =
-      '${counter.address}';
+  console.log(`HumorPass contract deployed at: ${humorPass.address}`);
 
-    if (counterContractAddress === '')
-      throw new Error('Missing addresses, need contract compilation');
-
-  `;
-
-  fs.writeFileSync(path.resolve('src', 'addresses.ts'), config);
+  const tx = await humorPass.safeMint();
+  console.log(`Minted NFTs with tx: ${tx.blockHash}`);
 };
 
 main()
