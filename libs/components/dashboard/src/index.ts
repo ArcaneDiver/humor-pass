@@ -1,1 +1,2 @@
-export * from './lib/components-dashboard';
+export * from './lib/Layout';
+export * from './lib/Sidebar';
